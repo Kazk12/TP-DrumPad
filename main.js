@@ -61,6 +61,6 @@ function handleKeyDownPlaying(event) {
     setTimeout(() => {
     key.classList.remove("playing");
     }, delay[delay.length - 1])
-    console.log(delay)
+    
   }
 }
