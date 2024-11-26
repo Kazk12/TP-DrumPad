@@ -1,125 +1,66 @@
-// window.addEventListener("keydown", handleKeyDownAudio);
-
-// function handleKeyDownAudio(event){
-//     if(event.repeat){return}
-//     let touche = event.keyCode
-//     var audio = document.querySelector(`audio[data-key="${touche}"]`);
-    
-//         audio.play()
-//     };
-let time = Date.now()
-
-// let currentMilliseconds = new Date().getTime();
-console.log(Date.now() - time);
-
-
+let time = Date.now();
 let sons = [];
-let interval = []
+let delay = [];
+let intervals = [];
 let record = false;
 let play = false;
 
-
 window.addEventListener("keydown", handleKeyDownAudio);
-window.addEventListener("keyup", handleKeyUpAudio);
+window.addEventListener("keyup", handleKeyDownAudio);
 window.addEventListener("keydown", handleKeyDownRecord);
 window.addEventListener("keydown", handleKeyDownPlaying);
 
-function handleKeyDownAudio(event){
-    let key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
-    if(event.repeat){return}
-    if(!key){
-        return
-    }
-    if(event.keyCode != 82 && event.keyCode != 80){
-        let audio = document.querySelector(`audio[data-key="${event.keyCode}"]`); 
-        audio.play();
-        key.classList.add("playing");  
-    }    
-    }
-function handleKeyUpAudio(event){
-    let key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
-    if(event.keyCode != 82 && event.keyCode != 80){
-        key.classList.remove("playing");  
-    } 
+function handleKeyDownAudio(event) {
+  let key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+  if (event.repeat) {
+    return;
+  }
+  if (!key) {
+    return;
+  }
+  if (event.keyCode != 82 && event.keyCode != 80) {
+    let audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+    audio.play();
+    key.classList.toggle("playing");
+  }
 }
-
-// function handleKeyDownRecord(event){
-    
-//     if(event.keyCode == "82"){
-//         record = !record
-//         let key = document.querySelector(`.key[data-key="82"]`);
-//         key.classList.toggle("playing");
-           
-//     } 
-//     if(event.keyCode != "82" && event.keyCode != "80" && record == true){
-//         sons.push(event.keyCode)
-//         interval.push(Date.now());
-//     }
-     
-// console.log(interval)
-    
-// }
-// function handleKeyDownPlaying(event){
-//     if(event.keyCode == "80"){
-//         play = !play
-//         let key = document.querySelector(`.key[data-key="80"]`);
-//         key.classList.toggle("playing");
-//         sons.forEach((son => {
-//             let test = document.querySelector(`audio[data-key="${son}"]`); 
-//             // test.play()
-            
-//         }))
-        
-        
-//     }
-
-// }
-
-
-// console.log(sons);
-
-
-
-function handleKeyDownRecord(event){
-    // Enregistrer ou arrêter l'enregistrement avec la touche "R"
-    if(event.keyCode == 82){ // R
-        record = !record;
-        let key = document.querySelector(`.key[data-key="82"]`);
-        key.classList.toggle("playing");
-    } 
-
-    // Enregistrer les keyCodes et les timestamps si l'enregistrement est activé
-    if(event.keyCode != 82 && event.keyCode != 80 && record == true){
-        sons.push(event.keyCode);
-        console.log(sons)
-        interval.push(Date.now());
+function handleKeyDownRecord(event) {
+  if (event.keyCode == "82") {
+    record = !record;
+    let key = document.querySelector(`.key[data-key="82"]`);
+    key.classList.toggle("playing");
+    if (record) {
+      sons = [];
+      intervals = [];
+      delay = [];
     }
-    console.log(interval);
+  }
+  if (event.keyCode != "82" && event.keyCode != "80" && record == true) {
+    sons.push(event.keyCode);
+    intervals.push(Date.now());
+    let PremierTemps = intervals[0];
+    let interval = intervals[intervals.length - 1] - PremierTemps;
+    delay.push(interval);
+  }
 }
-
-function handleKeyDownPlaying(event){
-    // Jouer ou arrêter la lecture avec la touche "P"
-    if(event.keyCode == 80){ // P
-        play = !play;
-        let key = document.querySelector(`.key[data-key="80"]`);
-        key.classList.toggle("playing");
-
-        if(play) {
-            // Si "P" est pressé, commencer la lecture
-            let DebutInterval = interval[0]; // Le premier enregistrement donne le temps de départ
-
-            // Parcours de chaque son pour jouer avec le bon timing
-            sons.forEach((son, index) => {
-                let delay = interval[index] - DebutInterval; // Calcul du délai en ms
-                setTimeout(() => {
-                    let audio = document.querySelector(`audio[data-key="${son}"]`);
-                    if (audio) {
-                        audio.currentTime = 0; // Rewind to the start
-                        audio.play(); // Jouer le son
-                    }
-                }, delay);
-            });
-        }
-    }
+function handleKeyDownPlaying(event) {
+  if (event.keyCode == "80") {
+    play = !play;
+    let key = document.querySelector(`.key[data-key="80"]`);
+    key.classList.add("playing");
+    sons.forEach((son, index) => {
+      let DrumPad = document.querySelector(`audio[data-key="${son}"]`);    
+      setTimeout(() => {       
+          document.querySelector(`.key[data-key="${son}"]`).classList.add("playing");
+          DrumPad.play();
+        }, delay[index]); 
+        setTimeout(() => {        
+            document.querySelector(`.key[data-key="${son}"]`).classList.remove("playing");     
+        }, delay[index] + 200);  
+    });
+    setTimeout(() => {
+    key.classList.remove("playing");
+    }, delay[delay.length - 1])
+    console.log(delay)
+  }
 }
-    

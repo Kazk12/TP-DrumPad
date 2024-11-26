@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:400,400i,700");
 
 html, body {
-  background: linear-gradient(to left, #fd746c , #ff9068);
+  background: linear-gradient(to left, #29aa1e , #4c6147);
   height: 100%;
   width: 100%;
   display: flex;
@@ -22,7 +22,7 @@ h1 {
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 20px 30px;
-  background-color: white;
+  background-color: rgb(158, 60, 92);
   border: 4px solid black;
   box-shadow: 4px 4px 0 0 black;
 }
@@ -37,7 +37,7 @@ h1 {
   font-size: 20px;
   font-weight: 500;
   color: black;
-  background-color: white;
+  background-color: rgb(236, 233, 233);
   border: 4px solid black;
   box-shadow: 4px 4px 0 0 black;
   user-select: none;
@@ -69,4 +69,33 @@ h1 {
 
 .green {
     background-color: rgb(87, 234, 124);
+}
+
+
+.key:not(.bottom-keys .key):nth-child(1).playing { 
+  background: radial-gradient(circle, #7f5050, #c59292); 
+}
+.key:not(.bottom-keys .key):nth-child(2).playing { 
+  background: radial-gradient(circle, #86593b, #9e6f40); 
+}
+.key:not(.bottom-keys .key):nth-child(3).playing { 
+  background: radial-gradient(circle, #ff1919, #a4500c); 
+}
+.key:not(.bottom-keys .key):nth-child(4).playing { 
+  background: radial-gradient(circle, #1be61b, #139e13); 
+}
+.key:not(.bottom-keys .key):nth-child(5).playing { 
+  background: radial-gradient(circle, #395d81, #363679); 
+}
+.key:not(.bottom-keys .key):nth-child(6).playing { 
+  background: radial-gradient(circle, #5c5570, #5f5169); 
+}
+.key:not(.bottom-keys .key):nth-child(7).playing { 
+  background: radial-gradient(circle, #a5c126, #7eb934); 
+}
+.key:not(.bottom-keys .key):nth-child(8).playing { 
+  background: radial-gradient(circle, #720c3f, #68123d); 
+}
+.key:not(.bottom-keys .key):nth-child(9).playing { 
+  background: radial-gradient(circle, #22d3ff, #29fbff); 
 }
