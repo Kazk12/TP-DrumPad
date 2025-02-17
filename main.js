@@ -40,7 +40,9 @@ function handleKeyDownRecord(event) {
     intervals.push(Date.now());
     let PremierTemps = intervals[0];
     let interval = intervals[intervals.length - 1] - PremierTemps;
+  console.log(interval);
     delay.push(interval);
+    console.log(delay)
   }
 }
 function handleKeyDownPlaying(event) {
